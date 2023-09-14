@@ -4,10 +4,16 @@ import { AxiosError } from "axios";
 import { SimpleGrid } from "@chakra-ui/react";
 import GameCard from "./GameCard";
 
+export interface Platform {
+  id: number,
+  name: string,
+  slug: string
+}
 export interface Game {
   id: number;
   name: string;
-  background_image: string
+  background_image: string,
+  parent_platforms: {platform: Platform}[]
 
 }
 
@@ -36,7 +42,7 @@ const GameGrid = () => {
   return (
     <>
       {error && <p>{error}</p>}
-      <SimpleGrid columns={{sm: 1, md: 2, lg: 3, xl: 5}} spacing={10} padding={'10px'}>
+      <SimpleGrid columns={{sm: 1, md: 2, lg: 3,}} spacing={10} padding={'10px'}>
         {game.map((e) => (
          <GameCard key={e.id} games={e}/>
         ))}
