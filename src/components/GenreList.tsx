@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import { AxiosError } from "axios";
-import { HStack, Image, List, ListItem, Text } from "@chakra-ui/react";
+import { Button, HStack, Image, List, ListItem } from "@chakra-ui/react";
 import GenreSkeleton from "./GenreSkeleton";
 
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
   image_background: string;
@@ -15,7 +15,12 @@ interface FetchGenreInterface {
   results: Genre[];
 }
 
-const GenreList = () => {
+interface Props {
+  onSelectGenre: (genre: Genre) => void,
+  selectedGenre: Genre | null
+}
+
+const GenreList = ({onSelectGenre, selectedGenre} : Props) => {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -25,10 +30,10 @@ const GenreList = () => {
     try {
       const res = await apiClient.get<FetchGenreInterface>("/genres");
       setGenres(res.data.results);
-        setLoading(false);
+      setLoading(false);
     } catch (error) {
       setError((error as AxiosError).message);
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -36,25 +41,23 @@ const GenreList = () => {
     fetchGenres();
   }, []);
 
-  let skeleton = [1,2,3,4,5,6,7,8,9, 10,11,12,13,14,15]
+  let skeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
-  if(error) return null
+  if (error) return null;
 
   return (
     <>
-    {
-        isLoading && skeleton.map(e => <GenreSkeleton key={e} />)
-    }
+      {isLoading && skeleton.map((e) => <GenreSkeleton key={e} />)}
       <List>
         {genres.map((e) => (
-          <ListItem key={e.id} paddingY='5px'>
+          <ListItem key={e.id} paddingY="5px">
             <HStack>
               <Image
                 src={e.image_background}
                 boxSize={"32px"}
                 borderRadius={8}
               />
-              <Text>{e.name}</Text>
+              <Button fontWeight={e.id === selectedGenre?.id ? 'bold' : 'normal'} variant="link" onClick={() => onSelectGenre(e)}>{e.name}</Button>
             </HStack>
           </ListItem>
         ))}
