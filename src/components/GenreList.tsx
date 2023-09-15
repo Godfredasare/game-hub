@@ -16,11 +16,11 @@ interface FetchGenreInterface {
 }
 
 interface Props {
-  onSelectGenre: (genre: Genre) => void,
-  selectedGenre: Genre | null
+  onSelectGenre: (genre: Genre) => void;
+  selectedGenre: Genre | null;
 }
 
-const GenreList = ({onSelectGenre, selectedGenre} : Props) => {
+const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -50,14 +50,21 @@ const GenreList = ({onSelectGenre, selectedGenre} : Props) => {
       {isLoading && skeleton.map((e) => <GenreSkeleton key={e} />)}
       <List>
         {genres.map((e) => (
-          <ListItem key={e.id} paddingY="5px">
+          <ListItem key={e.id} paddingY="8px">
             <HStack>
               <Image
                 src={e.image_background}
                 boxSize={"32px"}
                 borderRadius={8}
               />
-              <Button fontWeight={e.id === selectedGenre?.id ? 'bold' : 'normal'} variant="link" onClick={() => onSelectGenre(e)}>{e.name}</Button>
+              <Button
+                justifySelf={"center"}
+                fontWeight={e.id === selectedGenre?.id ? "bold" : "normal"}
+                variant="link"
+                onClick={() => onSelectGenre(e)}
+              >
+                {e.name}
+              </Button>
             </HStack>
           </ListItem>
         ))}

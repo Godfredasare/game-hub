@@ -5,6 +5,7 @@ import { SimpleGrid } from "@chakra-ui/react";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { Genre } from "./GenreList";
+import { PlatformSelectors } from "./PlatformSelector";
 
 export interface Platform {
   id: number;
@@ -26,9 +27,10 @@ interface FetchGame {
 
 interface Props {
   selectedGenre: Genre | null;
+  selectedPlatform: PlatformSelectors | null;
 }
 
-const GameGrid = ({ selectedGenre }: Props) => {
+const GameGrid = ({ selectedGenre, selectedPlatform }: Props) => {
   const [game, setGame] = useState<Game[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -37,7 +39,7 @@ const GameGrid = ({ selectedGenre }: Props) => {
     setLoading(true);
     try {
       const res = await apiClient.get<FetchGame>("/games", {
-        params: { genres: selectedGenre?.id },
+        params: { genres: selectedGenre?.id, platforms: selectedPlatform?.id },
       });
       setGame(res.data.results);
       setLoading(false);
@@ -49,7 +51,7 @@ const GameGrid = ({ selectedGenre }: Props) => {
 
   useEffect(() => {
     fetchGames();
-  }, [selectedGenre]);
+  }, [selectedGenre?.id, selectedPlatform?.id]);
 
   let Skeleton = [1, 2, 3, 4, 5, 6];
 

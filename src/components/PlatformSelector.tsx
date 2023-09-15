@@ -4,7 +4,7 @@ import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
 import { AxiosError } from "axios";
 
-interface Platform {
+export interface PlatformSelectors {
   id: number;
   name: string;
   slug: string;
@@ -12,22 +12,25 @@ interface Platform {
 
 interface PlatformResponse {
   count: number;
-  results: Platform[];
+  results: PlatformSelectors[];
 }
 
-const PlatformSelector = () => {
-  const [platform, setPlatform] = useState<Platform[]>([]);
-  const [error, setError] = useState('')
+interface Props {
+  onSelectedPlatform: (platform: PlatformSelectors) => void;
+}
+
+const PlatformSelector = ({ onSelectedPlatform }: Props) => {
+  const [platform, setPlatform] = useState<PlatformSelectors[]>([]);
+  const [error, setError] = useState("");
 
   const fetchPlatform = async () => {
     try {
-        
-        const res = await apiClient.get<PlatformResponse>(
-          "/platforms/lists/parents"
-        );
-        setPlatform(res.data.results);
+      const res = await apiClient.get<PlatformResponse>(
+        "/platforms/lists/parents"
+      );
+      setPlatform(res.data.results);
     } catch (error) {
-        setError((error as AxiosError).message)
+      setError((error as AxiosError).message);
     }
   };
 
@@ -35,7 +38,7 @@ const PlatformSelector = () => {
     fetchPlatform();
   }, []);
 
-  if(error) return null
+  if (error) return null;
 
   return (
     <Menu>
@@ -44,7 +47,12 @@ const PlatformSelector = () => {
       </MenuButton>
       <MenuList>
         {platform.map((platform) => (
-          <MenuItem key={platform.id}>{platform.name}</MenuItem>
+          <MenuItem
+            onClick={() => onSelectedPlatform(platform)}
+            key={platform.id}
+          >
+            {platform.name}
+          </MenuItem>
         ))}
       </MenuList>
     </Menu>
