@@ -21,7 +21,7 @@ const App = () => {
       }}
       templateColumns={{
         base: "1fr",
-        lg: "200px 1fr",
+        lg: "240px 1fr",
       }}
     >
       <GridItem area={"nav"}>
@@ -37,6 +37,7 @@ const App = () => {
       </Show>
       <GridItem area={"main"}>
         <PlatformSelector
+        selectedPlatform={selectedPlatform}
           onSelectedPlatform={(platform) => setSelectedPlatform(platform)}
         />
         <GameGrid
