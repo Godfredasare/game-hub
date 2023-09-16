@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Grid, GridItem, Show } from "@chakra-ui/react";
+import { Grid, GridItem, HStack, Show } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
 import GenreList from "./components/GenreList";
@@ -7,6 +7,7 @@ import { Genre } from "./components/GenreList";
 import PlatformSelector, {
   PlatformSelectors,
 } from "./components/PlatformSelector";
+import SortSelctor from "./components/SortSelctor";
 
 const App = () => {
   const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
@@ -36,10 +37,13 @@ const App = () => {
         </GridItem>
       </Show>
       <GridItem area={"main"}>
-        <PlatformSelector
-        selectedPlatform={selectedPlatform}
-          onSelectedPlatform={(platform) => setSelectedPlatform(platform)}
-        />
+        <HStack spacing={5} paddingLeft={3} marginBottom={5}>
+          <PlatformSelector
+            selectedPlatform={selectedPlatform}
+            onSelectedPlatform={(platform) => setSelectedPlatform(platform)}
+          />
+          <SortSelctor />
+        </HStack>
         <GameGrid
           selectedPlatform={selectedPlatform}
           selectedGenre={selectedGenre}
