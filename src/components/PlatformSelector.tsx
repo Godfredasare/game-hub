@@ -17,7 +17,7 @@ interface PlatformResponse {
 
 interface Props {
   onSelectedPlatform: (platform: PlatformSelectors) => void;
-  selectedPlatform: PlatformSelectors | null
+  selectedPlatform: PlatformSelectors | null;
 }
 
 const PlatformSelector = ({ onSelectedPlatform, selectedPlatform }: Props) => {
@@ -44,7 +44,7 @@ const PlatformSelector = ({ onSelectedPlatform, selectedPlatform }: Props) => {
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        {selectedPlatform?.name || 'Platforms'}
+        {selectedPlatform?.name || "Platforms"}
       </MenuButton>
       <MenuList>
         {platform.map((platform) => (
