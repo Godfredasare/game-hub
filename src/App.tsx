@@ -13,6 +13,7 @@ const App = () => {
   const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
   const [selectedPlatform, setSelectedPlatform] =
     useState<PlatformSelectors | null>(null);
+  const [selectedSortOrder, setSelectedSortOrder] = useState("");
 
   return (
     <Grid
@@ -42,9 +43,12 @@ const App = () => {
             selectedPlatform={selectedPlatform}
             onSelectedPlatform={(platform) => setSelectedPlatform(platform)}
           />
-          <SortSelctor />
+          <SortSelctor
+            onSelectSortOrder={(sortOder) => setSelectedSortOrder(sortOder)}
+          />
         </HStack>
         <GameGrid
+          selectedSortOrder={selectedSortOrder}
           selectedPlatform={selectedPlatform}
           selectedGenre={selectedGenre}
         />

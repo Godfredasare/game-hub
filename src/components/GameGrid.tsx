@@ -28,9 +28,14 @@ interface FetchGame {
 interface Props {
   selectedGenre: Genre | null;
   selectedPlatform: PlatformSelectors | null;
+  selectedSortOrder: string;
 }
 
-const GameGrid = ({ selectedGenre, selectedPlatform }: Props) => {
+const GameGrid = ({
+  selectedGenre,
+  selectedPlatform,
+  selectedSortOrder,
+}: Props) => {
   const [game, setGame] = useState<Game[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -39,7 +44,11 @@ const GameGrid = ({ selectedGenre, selectedPlatform }: Props) => {
     setLoading(true);
     try {
       const res = await apiClient.get<FetchGame>("/games", {
-        params: { genres: selectedGenre?.id, platforms: selectedPlatform?.id },
+        params: {
+          genres: selectedGenre?.id,
+          platforms: selectedPlatform?.id,
+          ordering: selectedSortOrder,
+        },
       });
       setGame(res.data.results);
       setLoading(false);
@@ -51,7 +60,7 @@ const GameGrid = ({ selectedGenre, selectedPlatform }: Props) => {
 
   useEffect(() => {
     fetchGames();
-  }, [selectedGenre?.id, selectedPlatform?.id]);
+  }, [selectedGenre?.id, selectedPlatform?.id, selectedSortOrder]);
 
   let Skeleton = [1, 2, 3, 4, 5, 6];
 
