@@ -44,6 +44,7 @@ const App = () => {
             onSelectedPlatform={(platform) => setSelectedPlatform(platform)}
           />
           <SortSelctor
+            selectedSortOrder={selectedSortOrder}
             onSelectSortOrder={(sortOder) => setSelectedSortOrder(sortOder)}
           />
         </HStack>
