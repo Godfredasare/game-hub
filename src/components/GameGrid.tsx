@@ -6,6 +6,8 @@ import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { Genre } from "./GenreList";
 import { PlatformSelectors } from "./PlatformSelector";
+// import NoImage from "../assets/no-image.jpeg";
+
 
 export interface Platform {
   id: number;
@@ -57,6 +59,7 @@ const GameGrid = ({
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchGames();
