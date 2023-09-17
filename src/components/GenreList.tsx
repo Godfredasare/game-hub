@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import { AxiosError } from "axios";
-import { Button, HStack, Image, List, ListItem } from "@chakra-ui/react";
+import { Button, HStack, Heading, Image, List, ListItem } from "@chakra-ui/react";
 import GenreSkeleton from "./GenreSkeleton";
 
 export interface Genre {
@@ -47,6 +47,7 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
 
   return (
     <>
+    <Heading fontSize='2xl' marginBottom={3}>Genres</Heading>
       {isLoading && skeleton.map((e) => <GenreSkeleton key={e} />)}
       <List>
         {genres.map((e) => (
@@ -56,8 +57,11 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
                 src={e.image_background}
                 boxSize={"32px"}
                 borderRadius={8}
+                objectFit='cover'
               />
               <Button
+                whiteSpace='normal'
+                textAlign='left'
                 justifySelf={"center"}
                 fontWeight={e.id === selectedGenre?.id ? "bold" : "normal"}
                 variant="link"
