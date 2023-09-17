@@ -8,7 +8,6 @@ import { Genre } from "./GenreList";
 import { PlatformSelectors } from "./PlatformSelector";
 // import NoImage from "../assets/no-image.jpeg";
 
-
 export interface Platform {
   id: number;
   name: string;
@@ -31,12 +30,14 @@ interface Props {
   selectedGenre: Genre | null;
   selectedPlatform: PlatformSelectors | null;
   selectedSortOrder: string;
+  searchText: string;
 }
 
 const GameGrid = ({
   selectedGenre,
   selectedPlatform,
   selectedSortOrder,
+  searchText,
 }: Props) => {
   const [game, setGame] = useState<Game[]>([]);
   const [error, setError] = useState("");
@@ -50,6 +51,7 @@ const GameGrid = ({
           genres: selectedGenre?.id,
           platforms: selectedPlatform?.id,
           ordering: selectedSortOrder,
+          search: searchText,
         },
       });
       setGame(res.data.results);
@@ -60,10 +62,9 @@ const GameGrid = ({
     }
   };
 
-
   useEffect(() => {
     fetchGames();
-  }, [selectedGenre?.id, selectedPlatform?.id, selectedSortOrder]);
+  }, [selectedGenre?.id, selectedPlatform?.id, selectedSortOrder, searchText]);
 
   let Skeleton = [1, 2, 3, 4, 5, 6];
 
