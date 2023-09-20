@@ -3,6 +3,7 @@ import apiClient from "../services/api-client";
 import { AxiosError } from "axios";
 import { Button, HStack, Heading, Image, List, ListItem } from "@chakra-ui/react";
 import GenreSkeleton from "./GenreSkeleton";
+import CroppedImageUrl from "./CroppedImageUrl";
 
 export interface Genre {
   id: number;
@@ -54,7 +55,7 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
           <ListItem key={e.id} paddingY="8px">
             <HStack>
               <Image
-                src={e.image_background}
+                src={CroppedImageUrl(e.image_background)}
                 boxSize={"32px"}
                 borderRadius={8}
                 objectFit='cover'
