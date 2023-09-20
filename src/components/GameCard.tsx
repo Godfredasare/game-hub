@@ -3,6 +3,7 @@ import { Game } from "./GameGrid";
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
 import noImage from "../assets/no-image.jpeg";
+import Emoji from "./Emoji";
 
 interface Props {
   games: Game;
@@ -18,13 +19,15 @@ const GameCard = ({ games }: Props) => {
         height={"200px"}
       />
       <CardBody>
-        <Heading fontSize={"2xl"}>{games.name}</Heading>
         <HStack justifyContent={"space-between"}>
           <PlatformIconList
             platform={games.parent_platforms.map((e) => e.platform)}
           />
           <CriticScore score={games.metacritic} />
         </HStack>
+        <Heading fontSize={"2xl"}>
+          {games.name} <Emoji ratings={games.rating_top} />
+        </Heading>
       </CardBody>
     </Card>
   );
